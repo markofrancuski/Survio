@@ -7,8 +7,9 @@ public class DamagePopUp : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private TextMeshProUGUI damageText;
+    [SerializeField] private GameObject parent;
 
-    public void ShowText(Vector3 position, string text, Colors color = Colors.WHITE, int direction = 0)
+    public void ShowText(Vector3 position, string text, Colors color = Colors.WHITE)
     {
         //Position text
         transform.position = position;
@@ -28,11 +29,17 @@ public class DamagePopUp : MonoBehaviour
         }
         damageText.color = c;
 
+        parent.SetActive(true);
+
         //Trigger animation
+        int direction = Random.Range(0, 2);
         if (direction > 0) _animator.SetTrigger("RIGHT");
         else _animator.SetTrigger("LEFT");
-
     }
 
+    public void Disable()
+    {
+        parent.SetActive(false);
+    }
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent( typeof(Rigidbody2D)) ]
 public class Bullet : Damage
 {
     [Header("BULLET CLASS")]
@@ -11,7 +11,7 @@ public class Bullet : Damage
     public float moveSpeed;
 
     public Vector3 dir;
-
+  
     public void Fire(Vector3 direction)
     {
         dir = direction;
@@ -25,4 +25,5 @@ public class Bullet : Damage
     {
         Destroy(gameObject);
     }
+
 }
