@@ -12,12 +12,12 @@ public class PlayerInput : MonoBehaviour
 
     //public FirstHand firstHand;
 
-    [SerializeField] private bool isStoped;
+    [SerializeField] private bool CheckForInput;
 
     // Update is called once per frame
     void Update()
     {
-        if (!isStoped) return;
+        if (!CheckForInput) return;
 
         if(Input.GetMouseButtonUp(0))
         {
@@ -62,7 +62,7 @@ public class PlayerInput : MonoBehaviour
     }
 
     //For Events upon opening canvas
-    private void StopShooting() => isStoped = false;
-    private void StartShooting() => isStoped = true;
+    private void StopShooting() => CheckForInput = false;
+    private void StartShooting() => CheckForInput = true;
 
 }

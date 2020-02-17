@@ -24,6 +24,10 @@ public class DayNightManager : MonoBehaviour
 
     #region DAY SETTINGS
     [Header("Day Settings")]
+    [SerializeField] private string[] _newDayQuotes;
+    [Space]
+    private string timeTemplateString = ":00";
+
     [SerializeField] private int _currentDay;
     public int CurrentDay
     {
@@ -31,6 +35,7 @@ public class DayNightManager : MonoBehaviour
         set
             {
                 _currentDay = value;
+                ConsoleManger.Instance.DisplayNotification(_newDayQuotes[Random.Range(0, _newDayQuotes.Length)]);
                 UpdateDays();
                 OnNewDay?.Invoke();
             }
@@ -42,14 +47,13 @@ public class DayNightManager : MonoBehaviour
         set
         {
             _currentTime = value;
-
-            if (_currentTime == 12 || _currentTime == 0) UpdateTimeSign();
-
             if(_currentTime > 24)
             {
                 _currentTime = 0;
                 CurrentDay++;
             }
+            if (_currentTime == 13 || _currentTime == 0) UpdateTimeSign();
+
             UpdateTime();
 
         }
@@ -75,7 +79,9 @@ public class DayNightManager : MonoBehaviour
     #endregion
 
     #region Coroutines
-
+    /// <summary>
+    /// Coroutine that waits for seconds and increases in game time.
+    /// </summary>
     private IEnumerator<float> _TimeCycleCoroutine()
     {
         while(true)
@@ -96,10 +102,10 @@ public class DayNightManager : MonoBehaviour
     /// <summary>
     /// Displays time value into textcomponent.
     /// </summary>
-    private void UpdateTime() => _dayText.SetText( _currentDay.ToString() );
+    private void UpdateTime() => _timeText.SetText( (_currentTime > 12 ? (_currentTime % 12).ToString() : _currentTime.ToString()) + timeTemplateString );
     /// <summary>
     /// Displays timeSign value into textcomponent.
     /// </summary>
-    private void UpdateTimeSign() => _dayText.SetText( _currentTime <= 12 ? _timeSignString[0]: _timeSignString[1] );
+    private void UpdateTimeSign() => _timeSignText.SetText( _currentTime <= 12 ? _timeSignString[0]: _timeSignString[1] );
     #endregion
 }

@@ -6,45 +6,64 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    public delegate void ResourcesInteractedEventDelegate(ResourceType type, float val);
+    public delegate void ResourcesInteractedEventDelegate(ResourceType type, float val );
     public static event ResourcesInteractedEventDelegate ResourceChanged;
 
-    public float Wood;
-    public float Stone;
-    public float IronOre;
+    private Dictionary<ResourceType, FloatValue> dictionary = new Dictionary<ResourceType, FloatValue>();
+
+
+    /* public float Wood;
+     public float Stone;
+     public float IronOre;*/
+
+    public FloatValue Wood;
+    public FloatValue Stone;
+    public FloatValue IronOre;
 
     private void Awake()
     {
         Instance = this;
+        //Binds resources with values for checking
+        dictionary.Add(ResourceType.WOOD, Wood);
+        dictionary.Add(ResourceType.STONE, Stone);
+        dictionary.Add(ResourceType.IRON, IronOre);
     }
 
     private void Start()
     {
-        ResourceChanged?.Invoke(ResourceType.WOOD, Wood);
-        ResourceChanged?.Invoke(ResourceType.STONE, Stone);
-        ResourceChanged?.Invoke(ResourceType.IRON, IronOre);
+        ResourceChanged?.Invoke(ResourceType.WOOD, Wood.Value);
+        ResourceChanged?.Invoke(ResourceType.STONE, Stone.Value);
+        ResourceChanged?.Invoke(ResourceType.IRON, IronOre.Value);
     }
     public void UpdateWood(float amount)
     {
-        Wood += amount;
-        ResourceChanged?.Invoke(ResourceType.WOOD, Wood);
+        Wood.Value += amount;
+        ResourceChanged?.Invoke(ResourceType.WOOD, Wood.Value);
         ConsoleManger.Instance.DisplayNotification($"Aquired x{amount} Wood!");
     }
 
     public void UpdateStone(float amount)
     {
-        Stone += amount;
-        ResourceChanged?.Invoke(ResourceType.STONE, Stone);
+        Stone.Value += amount;
+        ResourceChanged?.Invoke(ResourceType.STONE, Stone.Value);
         ConsoleManger.Instance.DisplayNotification($"Aquired x{amount} Stone!");
     }
 
     public void UpdateIron(float amount)
     {
-        IronOre += amount;
-        ResourceChanged?.Invoke(ResourceType.IRON ,IronOre);
+        IronOre.Value += amount;
+        ResourceChanged?.Invoke(ResourceType.IRON ,IronOre.Value);
         ConsoleManger.Instance.DisplayNotification($"Aquired x{amount} Iron!");
     }
 
+    public void ReduceResource(ResourceType type, float amount)
+    {
+        dictionary[type].Value -= amount;
+        ResourceChanged?.Invoke(type, GetResource(type));
+    }
 
-
+    public float GetResource(ResourceType type)
+    {
+        return dictionary[type].Value;
+    }
 }

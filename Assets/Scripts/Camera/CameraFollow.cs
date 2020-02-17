@@ -11,6 +11,20 @@ public class CameraFollow : MonoBehaviour
 
     [SerializeField] private Vector3 targetPosition = Vector3.zero;
 
+    public bool CheckForInput = true;
+
+    private void OnEnable()
+    {
+        CanvasManager.CanvasPaused += () => CheckForInput = false;
+        CanvasManager.CanvasUnpaused += () => CheckForInput = true;
+    }
+
+    private void OnDisable()
+    {
+        CanvasManager.CanvasPaused -= () => CheckForInput = false;
+        CanvasManager.CanvasUnpaused -= () => CheckForInput = true;
+    }
+
     private void Start()
     {
         targetPosition.z = -10f;
@@ -18,6 +32,8 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!CheckForInput) return;
+
         if(_targetTransform.position != transform.position)
         {
             targetPosition.x = _targetTransform.position.x;

@@ -18,14 +18,14 @@ public class CanvasInputManager : MonoBehaviour
     [Space]
     public CanvasInfo[] AvailableCanvases;
 
+    public List<CanvasInfo> ActiveCanvases;
+
+
     private void Awake()
     {
         Instance = this;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -48,6 +48,8 @@ public class CanvasInputManager : MonoBehaviour
 
             }
         }
+
+        if (ActiveCanvases.Count > 0 && Input.GetKeyUp(KeyCode.Escape)) RemoveLast();
     }
 
     private void OnEnable()
@@ -80,6 +82,13 @@ public class CanvasInputManager : MonoBehaviour
     /// </summary>
     /// <param name="index">Index of a canvas we want to close. </param>
     public void CloseOne(int index)  => AvailableCanvases[index].Close(); 
+    /// <summary>
+    /// Closing and removing last active Canvas.
+    /// </summary>
+    private void RemoveLast()
+    {
+        ActiveCanvases[ActiveCanvases.Count - 1].Close();
+    }
 
 }
 
@@ -111,6 +120,7 @@ public class CanvasInfo
     public void Open()
     {
         CanvasManager.Instance.OnUIShow(CanvasObject);
+        CanvasInputManager.Instance.ActiveCanvases.Add(this);
         //CanvasObject.SetActive(true);
         IsOpen = true;
     }
@@ -122,6 +132,7 @@ public class CanvasInfo
     {
         Debug.Log($"Closing Canvas with name: {CanvasName}");
         CanvasManager.Instance.OnUIHide(CanvasObject);
+        CanvasInputManager.Instance.ActiveCanvases.Remove(this);
         //CanvasObject.SetActive(false);
         IsOpen = false;
     }
