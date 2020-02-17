@@ -11,16 +11,15 @@ public class BuildingButtonClick : ButtonClick
 
     private void Start()
     {
-        _buildingIndex = GetComponent<ShowBuildingTooltip>()._buildingIndex;
+        //_buildingIndex = GetComponent<ShowBuildingTooltip>()._buildingIndex;
 
         _image.sprite = BuildingManager.Instance.buildings[_buildingIndex].bIcon;
     }
 
+
     public override void OnButtonClick()
     {
         BuildingManager.Instance.OnBuildingClicked(_buildingIndex);
-        {
-
-        }
     }
+
 }

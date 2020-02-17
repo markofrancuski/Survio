@@ -15,10 +15,11 @@ MonoBehaviour:
   bName: Wooden Spike
   bDescription: This is a wooden Spike NIGGA
   bIcon: {fileID: 21300000, guid: a130d2d195c2df149bee159ff7093788, type: 3}
-  isUnlocked: 0
+  isUnlocked: 1
   resourceRequirements:
   - type: 0
-    amount: 10
+    amount: 1
   - type: 1
-    amount: 20
+    amount: 1
   skillRequirements: []
+  prefab: {fileID: 8285478597596195577, guid: 8dad7580551759c40b761700468c3ab5, type: 3}

@@ -20,10 +20,9 @@ public class BuildingManager : MonoBehaviour
     [Space]
     public BuildingInfo[] buildings;
 
+    [Space]
     public BuildingInfo selectedBuilding;
 
-
-    // Make
     private void Awake()
     {
         Instance = this;
@@ -33,26 +32,46 @@ public class BuildingManager : MonoBehaviour
     {
         if (!buildings[index].isUnlocked) return;
 
-        //Set the building sprite to mousePosition
         //Unsubscribe from shooting
+        selectedBuilding = buildings[index];
         BuildingClicked?.Invoke();
+        Debug.Log("Clicked");
         /*for (int i = 0; i < buildings[index].resourceRequirements.Length; i++)
         {
             if ( !CheckResource(buildings[index]) ) return;
         }*/
     }
 
-    public void OnBuildingPlaced()
+    public void OnTryBuildingPlace(Transform _placePosition)
     {
-        //Subscribe Shooting Again
-        BuildingPlaced?.Invoke(selectedBuilding);
+        string str;
+        str = InventoryManager.Instance.CheckResources(selectedBuilding.resourceRequirements);
+        //Check Resources
+        if (str != string.Empty) throw new InsufficientResourceException(str);
 
-        
+        str = InventoryManager.Instance.CheckSkills(selectedBuilding.skillRequirements);
+        //Check Skill
+        if (str!= string.Empty) throw new SkillNotUnlockedException(str);
+
+        //Check place building position
+        //Instantiate Object
+        Instantiate(selectedBuilding.prefab, _placePosition.position, Quaternion.identity);
+
+        //Reduce Resources
+        for (int i = 0; i < selectedBuilding.resourceRequirements.Length; i++)
+        {
+            InventoryManager.Instance.ReduceResource(selectedBuilding.resourceRequirements[i].type, selectedBuilding.resourceRequirements[i].amount);
+        }
+
+
+        //Subscribe Shooting Again
+        BuildingPlaced?.Invoke(selectedBuilding);     
     }
 
     public void OnBuildingPlacementCancel()
     {
-
+        selectedBuilding = null;
+        BuildingPlacementCancel?.Invoke();
     }
 
     private bool CheckResource(BuildingInfo bInfo)

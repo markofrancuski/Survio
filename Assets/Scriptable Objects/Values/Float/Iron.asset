@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e50b9aafffcf5a4886e4139a88472fc, type: 3}
   m_Name: Iron
   m_EditorClassIdentifier: 
-  Value: 0
+  Value: 10000

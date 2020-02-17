@@ -56,6 +56,28 @@ public class InventoryManager : MonoBehaviour
         ConsoleManger.Instance.DisplayNotification($"Aquired x{amount} Iron!");
     }
 
+    public string CheckResources(ResourceRequirement[] requirements)
+    {
+        float res = 0;
+        string _returnMessage = string.Empty;
+        if (requirements.Length <= 0) return _returnMessage;
+
+        for (int i = 0; i < requirements.Length; i++)
+        {
+            res = GetResource(requirements[i].type);
+            if (res < requirements[i].amount) return $"Insufficient resource({requirements[i].type}) you need:({requirements[i].amount}), and you have only:({res})";
+        }
+
+        return _returnMessage;
+    }
+
+    public string CheckSkills(SkillTree[] requirements)
+    {
+        string _returnMessage = string.Empty;
+
+        return _returnMessage;
+    }
+
     public void ReduceResource(ResourceType type, float amount)
     {
         dictionary[type].Value -= amount;

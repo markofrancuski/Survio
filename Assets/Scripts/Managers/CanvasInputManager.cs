@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CanvasInputManager : MonoBehaviour
 {
@@ -20,12 +21,12 @@ public class CanvasInputManager : MonoBehaviour
 
     public List<CanvasInfo> ActiveCanvases;
 
+    [SerializeField] private bool _isCanvasInteractable;
 
     private void Awake()
     {
         Instance = this;
     }
-
 
     // Update is called once per frame
     void Update()
@@ -48,8 +49,8 @@ public class CanvasInputManager : MonoBehaviour
 
             }
         }
-
-        if (ActiveCanvases.Count > 0 && Input.GetKeyUp(KeyCode.Escape)) RemoveLast();
+        if (_isCanvasInteractable) return;
+        if (ActiveCanvases.Count > 0 && Input.GetKeyUp(KeyCode.Escape) ) RemoveLast();
     }
 
     private void OnEnable()
@@ -81,7 +82,7 @@ public class CanvasInputManager : MonoBehaviour
     /// Assigned In Inspector for OnButtonClickEvent.
     /// </summary>
     /// <param name="index">Index of a canvas we want to close. </param>
-    public void CloseOne(int index)  => AvailableCanvases[index].Close(); 
+    public void CloseOne(int index) => AvailableCanvases[index].Close(); 
     /// <summary>
     /// Closing and removing last active Canvas.
     /// </summary>
@@ -89,6 +90,9 @@ public class CanvasInputManager : MonoBehaviour
     {
         ActiveCanvases[ActiveCanvases.Count - 1].Close();
     }
+
+    public void EnableSpecialCanvas() => _isCanvasInteractable = true;
+    public void DisableSpecialCanvas() => _isCanvasInteractable = false;
 
 }
 
@@ -113,16 +117,26 @@ public class CanvasInfo
     /// Logic value used for checking state of Canvas and interacts according to the value.
     /// </summary>
     public bool IsOpen;
+    /// <summary>
+    /// Event That is being used to Call additional functionaly to executed wehn this Canvas is opened.
+    /// </summary>
+    public UnityEvent OpenEvent;
+    /// <summary>
+    /// Event That is being used to Call additional functionaly to executed wehn this Canvas is closed.
+    /// </summary>
+    public UnityEvent CloseEvent;
 
     /// <summary>
     /// Opens canvas and sets boolean value to true
     /// </summary>
     public void Open()
     {
+        Debug.Log($"Opening Canvas with name: {CanvasName}");
         CanvasManager.Instance.OnUIShow(CanvasObject);
         CanvasInputManager.Instance.ActiveCanvases.Add(this);
         //CanvasObject.SetActive(true);
         IsOpen = true;
+        OpenEvent?.Invoke();
     }
 
     /// <summary>
@@ -135,5 +149,7 @@ public class CanvasInfo
         CanvasInputManager.Instance.ActiveCanvases.Remove(this);
         //CanvasObject.SetActive(false);
         IsOpen = false;
+        CloseEvent?.Invoke();
     }
+
 }

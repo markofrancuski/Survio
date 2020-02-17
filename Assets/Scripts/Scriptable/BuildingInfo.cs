@@ -14,6 +14,8 @@ public class BuildingInfo : ScriptableObject
     public ResourceRequirement[] resourceRequirements;
     public SkillTree[] skillRequirements;
 
+    public GameObject prefab;
+
     public bool CheckSkillRequirements()
     {
         for (int i = 0; i < skillRequirements.Length; i++)
