@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BuildingManager : MonoBehaviour
 {
@@ -55,7 +56,8 @@ public class BuildingManager : MonoBehaviour
 
         //Check place building position
         //Instantiate Object
-        Instantiate(selectedBuilding.prefab, _placePosition.position, Quaternion.identity);
+        if (selectedBuilding.prefab == null) throw new NullReferenceException($"Selected building({selectedBuilding.bName}) does not have prefab assigned");
+        Instantiate(selectedBuilding.prefab, _placePosition.position, _placePosition.rotation);
 
         //Reduce Resources
         for (int i = 0; i < selectedBuilding.resourceRequirements.Length; i++)

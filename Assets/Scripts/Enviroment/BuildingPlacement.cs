@@ -14,6 +14,8 @@ public class BuildingPlacement : MonoBehaviour
     private bool _lClick;
     private bool _rClick;
 
+    [SerializeField] private Vector3 gridSize;
+
     private void Awake()
     {
         
@@ -37,12 +39,26 @@ public class BuildingPlacement : MonoBehaviour
                 return;
             }
 
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0;
-            if (transform.position != mousePos)
+            if(Input.GetKeyUp(KeyCode.R))
+            {
+                transform.Rotate(new Vector3(0, 0, 90f));
+            }
+
+            //mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //mousePos.z = 0;
+            /*if (transform.position != mousePos)
             {
                 transform.position = Vector3.Lerp(transform.position, mousePos, 0.1f);
-            }
+            }*/
+
+            //Get Current Position of the mouse and round position.
+            Vector3 currentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition); ;
+            currentPos.x = Mathf.Round(currentPos.x / gridSize.x );
+            currentPos.y = Mathf.Round(currentPos.y / gridSize.y) ;
+            currentPos.z = 0;
+
+            //Apply 'snaped' position to this game object
+            transform.position = currentPos;
 
             _lClick = Input.GetMouseButtonUp(0);
             _rClick = Input.GetMouseButtonUp(1);
@@ -71,9 +87,7 @@ public class BuildingPlacement : MonoBehaviour
                     //Cancel building
                     BuildingManager.Instance.OnBuildingPlacementCancel();
                 }
-            }
-
-           
+            }         
         }
     }
 
@@ -95,8 +109,13 @@ public class BuildingPlacement : MonoBehaviour
     {       
         _sprite.sprite = BuildingManager.Instance.selectedBuilding.bIcon;
         TintGreen();
-        CheckForInput = true;
+        //CheckForInput = true;
+        //Wait for 0.1s because it executes update in same frame, and places building
+        //which we don't want to have when we click on button to select building.
+        Invoke("WaitForInput", .1f);
     }
+    private void WaitForInput() => CheckForInput = true;
+
     private void BuildingDeselected()
     {
         CheckForInput = false;
