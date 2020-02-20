@@ -4,15 +4,41 @@ using UnityEngine;
 
 public class BuildingPlacementChecker : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public delegate void PlaceLocationValidatorEventHandler();
+
+    public static event PlaceLocationValidatorEventHandler OnValidPlace;
+    public static event PlaceLocationValidatorEventHandler OnInvalidPlace;
+
+    [SerializeField] private bool isActive;
+
+    private void OnEnable()
     {
-        
+        BuildingManager.BuildingClicked += StartChecking;
+        BuildingManager.BuildingPlacementCancel += StopChecking;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        BuildingManager.BuildingClicked -= StartChecking;
+        BuildingManager.BuildingPlacementCancel -= StopChecking;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(isActive && collision.CompareTag("Building"))
+        {
+            OnInvalidPlace?.Invoke();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (isActive && collision.CompareTag("Building"))
+        {
+            OnValidPlace?.Invoke();
+        }
+    }
+
+    private void StartChecking() => isActive = true;
+    private void StopChecking() => isActive = false;
 }

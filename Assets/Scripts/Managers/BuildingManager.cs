@@ -23,10 +23,23 @@ public class BuildingManager : MonoBehaviour
 
     [Space]
     public BuildingInfo selectedBuilding;
+    [SerializeField] private bool isLocationValid = true;
 
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void OnEnable()
+    {
+        BuildingPlacementChecker.OnValidPlace += LocationValid;
+        BuildingPlacementChecker.OnInvalidPlace += LocationInvalid;
+    }
+
+    private void OnDisable()
+    {
+        BuildingPlacementChecker.OnValidPlace -= LocationValid;
+        BuildingPlacementChecker.OnInvalidPlace -= LocationInvalid;
     }
 
     public void OnBuildingClicked(int index)
@@ -55,8 +68,9 @@ public class BuildingManager : MonoBehaviour
         if (str!= string.Empty) throw new SkillNotUnlockedException(str);
 
         //Check place building position
+        if (!isLocationValid) throw new InvalidPlacementException($"Invalid location to place building, place is already occupied!");
         //Instantiate Object
-        if (selectedBuilding.prefab == null) throw new NullReferenceException($"Selected building({selectedBuilding.bName}) does not have prefab assigned");
+        if(selectedBuilding.prefab == null) throw new NullReferenceException($"Selected building({selectedBuilding.bName}) does not have prefab assigned");
         Instantiate(selectedBuilding.prefab, _placePosition.position, _placePosition.rotation);
 
         //Reduce Resources
@@ -95,5 +109,6 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-
+    private void LocationValid() => isLocationValid = true;
+    private void LocationInvalid() => isLocationValid = false;
 }

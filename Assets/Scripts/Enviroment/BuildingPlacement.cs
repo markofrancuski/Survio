@@ -6,6 +6,7 @@ using UnityEngine;
 public class BuildingPlacement : MonoBehaviour
 {
 
+
     private Vector3 mousePos;
 
     [SerializeField] private SpriteRenderer _sprite;
@@ -76,6 +77,7 @@ public class BuildingPlacement : MonoBehaviour
                     }
                     catch (InvalidPlacementException e) { Debug.Log(e.Message); }
                     catch (InsufficientResourceException e) { Debug.Log(e.Message); }
+                    catch (SkillNotUnlockedException e) { Debug.Log(e.Message); }
                     catch (Exception e) { Debug.Log(e.Message); }
 
                 }
@@ -95,6 +97,8 @@ public class BuildingPlacement : MonoBehaviour
     {
         BuildingManager.BuildingClicked += BuildingSelected;
         BuildingManager.BuildingPlacementCancel += BuildingDeselected;
+        BuildingPlacementChecker.OnValidPlace += TintGreen;
+        BuildingPlacementChecker.OnInvalidPlace += TintRed;
 
     }
 
@@ -102,6 +106,8 @@ public class BuildingPlacement : MonoBehaviour
     {
         BuildingManager.BuildingClicked -= BuildingSelected;
         BuildingManager.BuildingPlacementCancel -= BuildingDeselected;
+        BuildingPlacementChecker.OnValidPlace -= TintGreen;
+        BuildingPlacementChecker.OnInvalidPlace -= TintRed;
     }
 
 
@@ -137,4 +143,6 @@ public class BuildingPlacement : MonoBehaviour
     {
         _sprite.color = Color.white;
     }
+
+
 }

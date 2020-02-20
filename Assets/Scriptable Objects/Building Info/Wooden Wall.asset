@@ -24,3 +24,4 @@ MonoBehaviour:
   - type: 2
     amount: 2
   skillRequirements: []
+  prefab: {fileID: 1492161090221495189, guid: f940ddb5e36dde742942eda50ca2c4c8, type: 3}
