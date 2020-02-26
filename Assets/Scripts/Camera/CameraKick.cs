@@ -13,11 +13,11 @@ public class CameraKick : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerInput.OnFire += Effect;
+        //PlayerInput.OnFire += Effect;
     }
 
     private void OnDisable()
     {
-        PlayerInput.OnFire -= Effect;
+        //PlayerInput.OnFire -= Effect;
     }
 }

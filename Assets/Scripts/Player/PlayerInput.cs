@@ -7,8 +7,9 @@ public class PlayerInput : MonoBehaviour
     public delegate void OnFireEventHandler();
     public static event OnFireEventHandler OnFire;
 
-    public GameObject bulletPrefab;
-    public Transform spawnPosition;
+    public GameObject _bulletPrefab;
+    [SerializeField] private Transform _spawnPosition;
+    [SerializeField] private Transform _targetPosition;
 
     //public FirstHand firstHand;
 
@@ -39,25 +40,17 @@ public class PlayerInput : MonoBehaviour
     }
 
 
-    void FireUpProjectile(Vector3 direction)
+    void FireUpProjectile(Vector2 direction)
     {
-        GameObject go = Instantiate(bulletPrefab, spawnPosition.position, Quaternion.identity);
+        //Add Pooler later
+        GameObject go = Instantiate(_bulletPrefab, _spawnPosition.position, Quaternion.identity);
         go.GetComponent<Bullet>().Fire(direction);
         OnFire?.Invoke();
     }
 
-    Vector3 GetDirection()
+    Vector2 GetDirection()
     {
-        Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-
-        //
-        //if (vec.x > 0) vec.x = 1;
-        //else if (vec.x < 0) vec.x = -1;
-        //else vec.x = 0;
-
-        //if (vec.y > 0) vec.y = 1;
-        //else if (vec.y < 0) vec.y = -1;
-        //else vec.y = 0;
+        Vector2 vec = _targetPosition.position - _spawnPosition.position;
         return vec.normalized;
     }
 

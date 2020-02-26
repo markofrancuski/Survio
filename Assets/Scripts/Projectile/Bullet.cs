@@ -10,14 +10,17 @@ public class Bullet : Damage
    
     public float moveSpeed;
 
-    public Vector3 dir;
+    public Vector2 dir;
   
-    public void Fire(Vector3 direction)
+    public void Fire(Vector2 direction)
     {
-        dir = direction;
-        _rigidBody.velocity = dir * moveSpeed;
-        transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
-           
+
+        //float angle = Mathf.Acos(Vector2.Dot(Vector2.up, transform.TransformDirection(direction)) );
+        //transform.Rotate(Vector3.back, angle * Mathf.Rad2Deg);
+
+        transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+
+        _rigidBody.velocity = direction * moveSpeed;
         //_rigidBody.velocity = direction * moveSpeed;
     }
 

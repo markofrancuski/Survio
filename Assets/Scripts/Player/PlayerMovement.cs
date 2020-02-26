@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float moveX;
     public float moveY;
-    public Vector3 moveVector;
+    public Vector2 moveVector;
 
     public bool CheckForInput = true;
     // Update is called once per frame

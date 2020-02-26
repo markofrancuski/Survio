@@ -15,10 +15,11 @@ public class InventoryManager : MonoBehaviour
     /* public float Wood;
      public float Stone;
      public float IronOre;*/
-
+     [Header("Scriptable Values")]
     public FloatValue Wood;
     public FloatValue Stone;
     public FloatValue IronOre;
+    public IntValue SkillPoints;
 
     private void Awake()
     {
@@ -71,9 +72,15 @@ public class InventoryManager : MonoBehaviour
         return _returnMessage;
     }
 
-    public string CheckSkills(SkillTree[] requirements)
+    public string CheckSkills(SkillRequirement[] requirements)
     {
         string _returnMessage = string.Empty;
+        if(requirements.Length <= 0) return _returnMessage;
+        for (int i = 0; i < requirements.Length; i++)
+        {
+            if (requirements[i].skillRequirement.currentLevel < requirements[i].levelRequirement) return $"Skill {requirements[i].skillRequirement.sName} is not unlocked, you need level:{requirements[i].levelRequirement}, and its level: {requirements[i].skillRequirement.currentLevel}";
+        }
+
 
         return _returnMessage;
     }

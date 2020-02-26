@@ -1,10 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "Skill Tree", menuName = "Scriptable/SkillTree", order = 0)]
-public class SkillTree : ScriptableObject
+[CreateAssetMenu(fileName = "Skill", menuName = "Scriptable/Skill", order = 0)]
+public class Skill : ScriptableObject
 {
+    public delegate void OnSkillUnlockEventHandler();
+    public event OnSkillUnlockEventHandler SkillUnlocked;
+
+    // Namestiti globalnu klasu za evente i svaki skill poseban key za wevent i kada se skill
+    // namesti da povuce sve metode iz tog eventa i subuje ih ovde.
 
     public string sName;
     public string sDescription;
@@ -12,17 +19,40 @@ public class SkillTree : ScriptableObject
 
     public bool isUnlocked;
     public int pointsCost;
-    public SkillTree[] skillRequirements;
-    
-    public bool CheckRequirements()
+    public int currentLevel = 0;
+    public int maxLevel = 0;
+
+    public SkillRequirement[] skillRequirements;
+
+    public void CheckRequirements()
     {
-        if (skillRequirements.Length == 0 && isUnlocked) return true;
+        if (skillRequirements.Length == 0 && currentLevel != 0) isUnlocked = true;
+
         //Loop thru other skills
         for (int i = 0; i < skillRequirements.Length; i++)
         {
-            if (!skillRequirements[i].isUnlocked) return false;
+            if (!skillRequirements[i].skillRequirement.isUnlocked) return;
         }
-        return true;
+        isUnlocked = true;
     }
 
+    public void LevelUp(UnityAction callback)
+    {
+        //if (!isUnlocked) return;
+        if (InventoryManager.Instance.SkillPoints.Value >= pointsCost)
+        {
+            currentLevel++;
+            if (currentLevel == 1) isUnlocked = true;
+            ConsoleManger.Instance.DisplayNotification($"{sName} has been upgraded from: {currentLevel - 1}, to: {currentLevel}");
+            InventoryManager.Instance.SkillPoints.Value -= pointsCost;
+            callback();
+            //Logic for increasing skill points cost
+        }
+    }
+
+    public void Unlock()
+    {
+        isUnlocked = true;
+        SkillUnlocked?.Invoke();
+    }
 }
