@@ -65,6 +65,20 @@ namespace Skill_System
         {
         }
 
+        public SkillState GetSkillState(string skillKey)
+        {
+            return NodeCache[Skill.Store.Find(skillKey)].skillState;
+        }
+
+        public IEnumerable<SkillRequirement> GetRequirements(Skill skill)
+        {
+            var node = NodeCache[skill];
+            foreach (var child in node.children)
+            {
+                yield return child.Item2;
+            }
+        }
+
         public IEnumerable<SkillState> Enumerate()
         {
             var Queue = new Queue<Node>();

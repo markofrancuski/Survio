@@ -15,7 +15,13 @@
 
         public void IncreaseLevel(int by = 1)
         {
+            //Logika za sve
             Level += by;
+        }
+
+        public void ApplyEffect(object context)
+        {
+            Skill.ApplyEffect(context, Level);
         }
     }
 }

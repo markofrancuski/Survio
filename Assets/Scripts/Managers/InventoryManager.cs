@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Skill_System;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -13,9 +14,9 @@ public class InventoryManager : MonoBehaviour
 
 
     /* public float Wood;
-     public float Stone;
-     public float IronOre;*/
-     [Header("Scriptable Values")]
+    public float Stone;
+    public float IronOre;*/
+    [Header("Scriptable Values")]
     public FloatValue Wood;
     public FloatValue Stone;
     public FloatValue IronOre;
@@ -28,6 +29,21 @@ public class InventoryManager : MonoBehaviour
         dictionary.Add(ResourceType.WOOD, Wood);
         dictionary.Add(ResourceType.STONE, Stone);
         dictionary.Add(ResourceType.IRON, IronOre);
+
+        Sprite s =  Resources.Load<Sprite>("1.png");                
+        Skill_System.Skill.Store.CreateSkill("Skill 1", "test skill name", "test skill desc", s, new List<SkillEffect>() { new DamageEffect() });
+        Skill_System.Skill.Store.CreateSkill("Skill 2", "test skill name", "test skill desc", s, new List<SkillEffect>() { new DamageEffect(2) });
+        Skill_System.Skill.Store.CreateSkill("Skill 3", "test skill name", "test skill desc", s, new List<SkillEffect>() { new DamageEffect(3) });
+        Skill_System.Skill.Store.CreateSkill("Skill 4", "test skill name", "test skill desc", s, new List<SkillEffect>() { new DamageEffect(4) });
+        Skill_System.Skill.Store.CreateSkill("Skill 5", "test skill name", "test skill desc", s, new List<SkillEffect>() { new DamageEffect(5) });
+        Skill_System.Skill.Store.CreateSkill("Skill 6", "test skill name", "test skill desc", s, new List<SkillEffect>() { new DamageEffect(6) });
+
+        var tree = SkillTree.Generator.testTree1();
+        tree.GetSkillState("Skill 2").ApplyEffect(this);
+        foreach (var skillState in tree.Enumerate())
+        {
+            if(skillState.Level > 0) skillState.ApplyEffect(this);
+        }
     }
 
     private void Start()

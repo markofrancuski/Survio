@@ -41626,7 +41626,7 @@ MonoBehaviour:
   _skillCurrentLevelText: {fileID: 2118762372}
   _skillMaxLevelText: {fileID: 1441064671}
   _button: {fileID: 1706933593}
-  skill: {fileID: 11400000, guid: 3efabf1c8c74b384190f35a1fc74777a, type: 2}
+  skill: {fileID: 0}
 --- !u!114 &1339143293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44810,7 +44810,7 @@ MonoBehaviour:
   _skillCurrentLevelText: {fileID: 2061125925}
   _skillMaxLevelText: {fileID: 945975607}
   _button: {fileID: 948226042}
-  skill: {fileID: 11400000, guid: 884421c4f50d91445af623b9e29898b1, type: 2}
+  skill: {fileID: 0}
 --- !u!114 &1536109681
 MonoBehaviour:
   m_ObjectHideFlags: 0
