@@ -20,7 +20,7 @@ public class BuildingInfo : ScriptableObject
     {
         for (int i = 0; i < skillRequirements.Length; i++)
         {
-                if (skillRequirements[i].skillRequirement.currentLevel < skillRequirements[i].levelRequirement) return false;
+                if (skillRequirements[i].skillRequirement.CurrentLevel < skillRequirements[i].levelRequirement) return false;
         }
         return true;
     }

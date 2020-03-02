@@ -7,16 +7,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Skill
-  m_EditorClassIdentifier: Assembly-CSharp::Skill
-  sName: 
-  sDescription: 
+  m_Script: {fileID: 11500000, guid: ddb9c9a5dc611d74f96f5c8cc74f4909, type: 3}
+  m_Name: Test skill 1
+  m_EditorClassIdentifier: 
+  sName: Test skill 1
+  sDescription: Test Description  1
   sIcon: {fileID: 0}
   isUnlocked: 0
-  pointsCost: 0
+  pointsCost: 1
   currentLevel: 0
-  maxLevel: 0
+  maxLevel: 5
   skillRequirements: []

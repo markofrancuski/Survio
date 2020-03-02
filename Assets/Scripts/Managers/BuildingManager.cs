@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Skill_System;
 
 public class BuildingManager : MonoBehaviour
 {
@@ -28,16 +27,7 @@ public class BuildingManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-
-        var tree = SkillTree.Generator.testTree1();
-        var skill1Children = tree.EnumerateChildren(Skill_System.Skill.Store.Find("Skill 1"));
-        foreach (var ch in skill1Children)
-        {
-            Debug.Log(ch.Item1.Skill.Name);
-            Debug.Log(ch.Item2.requiredLevel);
-        }
-        
+        Instance = this;     
     }
 
     private void OnEnable()
