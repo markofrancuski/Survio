@@ -24,12 +24,12 @@ public class Skill : ScriptableObject
     {
         get { return pointsCost; }
     }
-    [SerializeField] public int currentLevel;
+    [SerializeField] private int currentLevel;
     public int CurrentLevel
     {
         get { return currentLevel; }
     }
-    [SerializeField] public int maxLevel;
+    [SerializeField] private int maxLevel;
     public int MaxLevel
     {
         get { return maxLevel; }
@@ -64,11 +64,6 @@ public class Skill : ScriptableObject
         //Logic for increasing skill points cost
     }
 
-    public void Unlock()
-    {
-        isUnlocked = true;
-    }
-
     public bool IsMax
     {
         get
@@ -78,5 +73,19 @@ public class Skill : ScriptableObject
         }
     }
 
+    public void CheckUnlock()
+    {
+        if (skillRequirements.Length == 0)
+        {
+            currentLevel = 0;
+            return;
+        }
+        //Loop thru other skills
+        for (int i = 0; i < skillRequirements.Length; i++)
+        {
+            if (skillRequirements[i].skillRequirement.CurrentLevel < skillRequirements[i].levelRequirement) return;
+        }
 
+        currentLevel = 0;
+    }
 }

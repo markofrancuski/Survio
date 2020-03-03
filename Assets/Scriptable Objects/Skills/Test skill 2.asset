@@ -17,7 +17,7 @@ MonoBehaviour:
   sIcon: {fileID: 0}
   isUnlocked: 0
   pointsCost: 1
-  currentLevel: -1
+  currentLevel: 5
   maxLevel: 5
   skillRequirements:
   - skillRequirement: {fileID: 11400000, guid: bb6023c96163b30459cbdc4cc1517b19, type: 2}

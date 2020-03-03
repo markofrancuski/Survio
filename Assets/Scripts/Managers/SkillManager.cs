@@ -13,6 +13,17 @@ public class SkillManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        foreach (var skill in _skills)
+        {
+            if (skill.skillRequirements.Length > 0)
+            {
+                foreach (var req in skill.skillRequirements)
+                {
+                    req.skillRequirement.SkillLeveled += skill.CheckUnlock;
+                }
+            }      
+        }
     }
 
     public Skill GetSkill(int index)
@@ -29,4 +40,9 @@ public class SkillManager : MonoBehaviour
     {
         return _skills[index].LevelUp();
     }
+    private void OnApplicationQuit()
+    {
+        
+    }
+
 }

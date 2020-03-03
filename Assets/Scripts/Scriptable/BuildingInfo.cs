@@ -44,7 +44,8 @@ public class BuildingInfo : ScriptableObject
         }
         int skillStartingIndex = index / 2 + 2;
 
-        if (skillRequirements.Length > 0)
+
+        /*if (skillRequirements.Length > 0)
         { 
             for (int i = skillStartingIndex; i < skillStartingIndex+ skillRequirements.Length; i += 2)
             {
@@ -52,7 +53,7 @@ public class BuildingInfo : ScriptableObject
                 strs[i + 1] = skillRequirements[skillIndex].levelRequirement.ToString();
                 skillIndex++;
             }
-        }
+        }*/
         return strs;
    }
 
