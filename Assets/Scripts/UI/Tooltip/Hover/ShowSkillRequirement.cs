@@ -5,16 +5,21 @@ using UnityEngine.EventSystems;
 
 public class ShowSkillRequirement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
+    [SerializeField] public int _skillIndex;
+    [SerializeField] private int _tooltipIndex;
+    [SerializeField] private Vector3 _position;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (!SkillManager.Instance.ShouldShowRequirementTooltip(_skillIndex)) return;
+
+        TooltipManager.Instance.Show(transform.position + _position, _tooltipIndex, SkillManager.Instance.GetSkillRequirementsAsString(_skillIndex) );
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (!SkillManager.Instance.ShouldShowRequirementTooltip(_skillIndex)) return;
+        TooltipManager.Instance.Hide(_skillIndex);
     }
 
 }

@@ -11,14 +11,11 @@ public class ShowBuildingTooltip : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        TooltipManager.Instance.Show(transform.position + _position, _tooltipIndex, BuildingManager.Instance.buildings[_buildingIndex].ResourcesAsString() );
+        TooltipManager.Instance.Show(transform.position + _position, _tooltipIndex, BuildingManager.Instance.GetBuildingResourcesAsString(_buildingIndex) );
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         TooltipManager.Instance.Hide(_tooltipIndex);
     }
-
-
-
 }

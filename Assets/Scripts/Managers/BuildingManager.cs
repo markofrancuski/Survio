@@ -19,7 +19,7 @@ public class BuildingManager : MonoBehaviour
     public static event OnBuildingPlacementCancelEvent BuildingPlacementCancel;
 
     [Space]
-    public BuildingInfo[] buildings;
+    [SerializeField] private BuildingInfo[] buildings;
 
     [Space]
     public BuildingInfo selectedBuilding;
@@ -108,6 +108,11 @@ public class BuildingManager : MonoBehaviour
             InventoryManager.Instance.ReduceResource(bInfo.resourceRequirements[i].type, bInfo.resourceRequirements[i].amount);
         }
     }
+
+
+    public string[] GetBuildingResourcesAsString(int index) => buildings[index].ResourcesAsString();
+
+    public Sprite GetBuildingSprite(int index) => buildings[index].bIcon;
 
     private void LocationValid() => isLocationValid = true;
     private void LocationInvalid() => isLocationValid = false;

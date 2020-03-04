@@ -88,4 +88,19 @@ public class Skill : ScriptableObject
 
         currentLevel = 0;
     }
+
+    public string[] SkillRequirementsAsString()
+    {
+        int length = 1 + skillRequirements.Length * 2;
+        string[] str = new string[length];
+
+        str[0] = sName;
+
+        for (int i = 1; i <= skillRequirements.Length; i+= 2)
+        {
+            str[i] = skillRequirements[i-1].skillRequirement.sName;
+            str[i+1] = skillRequirements[i-1].levelRequirement.ToString();
+        }
+        return str;
+    }
 }

@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class TooltipSkillRequirement : Tooltip
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public override void Show(Vector3 position, string[] strings)
     {
-        
+        _contexts = strings;
+        int numberOfTexts = _contexts.Length;
+
+        for (int i = 0; i < _textComponents.Length; i++)
+        {
+            if (i < numberOfTexts)
+            {
+                //Activate component
+                _textComponents[i].SetText(_contexts[i]);
+            }
+            else
+            {
+                //Deactivate them
+                _textComponents[i].SetText(string.Empty);
+            }
+        }
+
+        transform.position = position;
+        gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Hide()
     {
-        
+        transform.position = _initialPos;
+        gameObject.SetActive(false);
     }
 }

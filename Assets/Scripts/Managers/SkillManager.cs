@@ -22,7 +22,7 @@ public class SkillManager : MonoBehaviour
                 {
                     req.skillRequirement.SkillLeveled += skill.CheckUnlock;
                 }
-            }      
+            }
         }
     }
 
@@ -30,7 +30,7 @@ public class SkillManager : MonoBehaviour
     {
         return _skills[index];
     }
-    
+
     public bool GetSkillRequirements(int index)
     {
         return _skills[index].CheckRequirements();
@@ -40,6 +40,15 @@ public class SkillManager : MonoBehaviour
     {
         return _skills[index].LevelUp();
     }
+
+    public string[] GetSkillRequirementsAsString(int index) => _skills[index].SkillRequirementsAsString();
+
+    public bool ShouldShowRequirementTooltip(int index)
+    {
+        if (_skills[index].skillRequirements.Length <= 0 || _skills[index].IsMax) return false;
+        return true;   
+    }
+
     private void OnApplicationQuit()
     {
         
