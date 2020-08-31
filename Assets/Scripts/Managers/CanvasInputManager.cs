@@ -23,12 +23,12 @@ public class CanvasInputManager : MonoBehaviour
 
     [SerializeField] private bool _isCanvasInteractable;
 
+    #region Unity Lifecycle Methods
     private void Awake()
     {
         Instance = this;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!CheckForInput) return;
@@ -59,11 +59,13 @@ public class CanvasInputManager : MonoBehaviour
         /*SubscribeToInput;
         UnsubscribeToInput;*/
     }
+
     private void OnDisable()
     {
 
 
     }
+    #endregion
 
     /// <summary>
     /// Subscribes the method to the event and starts checking for input. Invokes at the start game.

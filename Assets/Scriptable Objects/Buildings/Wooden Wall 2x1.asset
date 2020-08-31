@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398641faa48cb5647a94a5948ea2965a, type: 3}
+  m_Name: Wooden Wall 2x1
+  m_EditorClassIdentifier: 
+  bName: Wooden Wall 2x1
+  bDescription: Wooden Wall used to protect yourself against threats.
+  bIcon: {fileID: 21300000, guid: ee01a37aecf8a054fbf062d7fb72b626, type: 3}
+  isUnlocked: 1
+  resourceRequirements:
+  - type: 0
+    amount: 100
+  skillRequirements: []
+  prefab: {fileID: 105709011546556553, guid: 20844a4776ee92f4c96082e0bccf55a5, type: 3}

@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
-public class BaseEnemy : MonoBehaviour
+public abstract class BaseEnemy : MonoBehaviour
 {
 
-    [SerializeField] private AIState _currentState;
+    [SerializeField] protected AIState _currentState;
 
-    [Header("Stats")]
-    [SerializeField] private float attackRadius;
-    [SerializeField] private float chaseRadius;
+    [SerializeField] protected float AttackRadius;
+    [SerializeField] protected float ChaseRadius;
 
     [SerializeField] FlashRed red;
     private void Awake()
@@ -38,13 +34,27 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Projectile"))
         {
             Health -= other.GetComponent<IDamage>().DMG;
         }
+    }
+
+    protected virtual void Update()
+    {
+        // Chase Radius
+        Debug.DrawLine(transform.position, transform.position + new Vector3(0 , ChaseRadius, 0), Color.red);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(0, -ChaseRadius, 0), Color.red);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(ChaseRadius, 0, 0), Color.red);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(-ChaseRadius, 0, 0), Color.red);
+
+        // Attack Radius
+        Debug.DrawLine(transform.position, transform.position + new Vector3(0, AttackRadius, 0), Color.yellow);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(0, -AttackRadius, 0), Color.yellow);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(AttackRadius, 0, 0), Color.yellow);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(-AttackRadius, 0, 0), Color.yellow);
+
     }
 }

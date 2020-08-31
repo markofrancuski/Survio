@@ -45,13 +45,6 @@ public class BuildingPlacement : MonoBehaviour
                 transform.Rotate(new Vector3(0, 0, 90f));
             }
 
-            //mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //mousePos.z = 0;
-            /*if (transform.position != mousePos)
-            {
-                transform.position = Vector3.Lerp(transform.position, mousePos, 0.1f);
-            }*/
-
             //Get Current Position of the mouse and round position.
             Vector3 currentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition); ;
             currentPos.x = Mathf.Round(currentPos.x / gridSize.x );
